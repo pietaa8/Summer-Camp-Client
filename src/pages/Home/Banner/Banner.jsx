@@ -1,7 +1,7 @@
 const Banner = () => {
     return (
       <div>
-        <div className="carousel w-full  style={{ height: '400px' }}">
+        <div className="carousel w-full h-[600px] mt-5 mb-5">
           <div id="slide1" className="carousel-item relative w-full">
             <img
               src="https://img.freepik.com/free-photo/football-concept-with-slate_23-2147832083.jpg?size=626&ext=jpg&ga=GA1.2.928138083.1680619194&semt=ais"
@@ -16,9 +16,9 @@ const Banner = () => {
               </a>
             </div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-              <h2 className="text-2xl font-bold">Heading 1</h2>
-              <h3 className="text-lg font-semibold">Subheading 1</h3>
-              <p className="text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h2 className="text-3xl text-white font-bold">Welcome to Our Sports Website</h2>
+              <h3 className="text-lg   text-white font-semibold">The Latest Updates, News, and Analysis</h3>
+              <p className="text-base  text-white">Stay informed about your favorite sports with our comprehensive coverage. From live scores and match highlights to in-depth analysis and player interviews, we bring you everything you need to know about the world of sports.</p>
             </div>
           </div>
           <div id="slide2" className="carousel-item relative w-full">
@@ -35,9 +35,9 @@ const Banner = () => {
               </a>
             </div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-              <h2 className="text-2xl font-bold">Heading 2</h2>
-              <h3 className="text-lg font-semibold">Subheading 2</h3>
-              <p className="text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h2 className="text-2xl  text-white font-bold">Welcome to Our Sports Website</h2>
+              <h3 className="text-lg  text-white font-semibold">The Latest Updates, News, and Analysis</h3>
+              <p className="text-base  text-white">Stay informed about your favorite sports with our comprehensive coverage. From live scores and match highlights to in-depth analysis and player interviews, we bring you everything you need to know about the world of sports.</p>
             </div>
           </div>
           <div id="slide3" className="carousel-item relative w-full">
@@ -54,9 +54,9 @@ const Banner = () => {
               </a>
             </div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-              <h2 className="text-2xl font-bold">Heading 3</h2>
-              <h3 className="text-lg font-semibold">Subheading 3</h3>
-              <p className="text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h2 className="text-2xl  text-white font-bold">Welcome to Our Sports Website</h2>
+              <h3 className="text-lg  text-white font-semibold">The Latest Updates, News, and Analysis</h3>
+              <p className="text-base  text-white">Stay informed about your favorite sports with our comprehensive coverage. From live scores and match highlights to in-depth analysis and player interviews, we bring you everything you need to know about the world of sports.</p>
             </div>
           </div>
           <div id="slide4" className="carousel-item relative w-full">
@@ -73,9 +73,9 @@ const Banner = () => {
               </a>
             </div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-              <h2 className="text-2xl font-bold">Heading 4</h2>
-              <h3 className="text-lg font-semibold">Subheading 4</h3>
-              <p className="text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h2 className="text-2xl  text-white font-bold">Welcome to Our Sports Website</h2>
+              <h3 className="text-lg  text-white font-semibold">The Latest Updates, News, and Analysis</h3>
+              <p className="text-base  text-white">Stay informed about your favorite sports with our comprehensive coverage. From live scores and match highlights to in-depth analysis and player interviews, we bring you everything you need to know about the world of sports.</p>
             </div>
           </div>
         </div>
