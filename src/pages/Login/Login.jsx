@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle , FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
@@ -7,6 +7,11 @@ import { AuthContext } from "../../providers/AuthProvider";
 const Login = () => {
     const {signIn}=useContext(AuthContext);
     const [showPassword, setShowPassword]=useState(false);
+
+    const navigate=useNavigate();
+    const location=useLocation();
+
+    const from=location.state?.from?.pathname || "/";
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -23,6 +28,7 @@ const Login = () => {
         .then(result=>{
             const user=result.user;
             console.log(user);
+            navigate(from,{replace:true});
         })
     }
     return (

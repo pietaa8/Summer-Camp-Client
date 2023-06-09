@@ -2,6 +2,8 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FaGoogle } from 'react-icons/fa';
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Signup = () => {
     const {
@@ -11,8 +13,15 @@ const Signup = () => {
         getValues
     } = useForm();
 
+    const {createUser}=useContext(AuthContext);
+
     const onSubmit = (data) => {
         console.log(data);
+        createUser(data.email,data.password)
+        .then(result=>{
+            const loggesUser=result.user;
+            console.log(loggesUser);
+        })
     };
 
     const validatePassword = (value) => {
