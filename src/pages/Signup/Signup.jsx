@@ -14,24 +14,42 @@ const Signup = () => {
         getValues
     } = useForm();
 
-    const {createUser,updateUserProfile}=useContext(AuthContext);
-    const navigate=useNavigate();
+    const { createUser, updateUserProfile } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        console.log(data);
-        createUser(data.email,data.password)
-        .then(result=>{
-            const loggesUser=result.user;
-            console.log(loggesUser);
-            updateUserProfile(data.name,data.photoURL)
-            .then(()=>{
-                console.log('user profile photo has been updated');
-                reset();
-                navigate('/');
 
+        createUser(data.email, data.password)
+            .then(result => {
+
+                const loggesUser = result.user;
+                console.log(loggesUser);
+                updateUserProfile(data.name, data.photoURL)
+                    .then(() => {
+                        const saveUser = { name: data.name, email: data.email }
+
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(saveUser)
+                        })
+                        
+
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    alert('user is added');
+                                }
+                            })
+                        console.log('user profile photo has been updated');
+                        reset();
+                        navigate('/');
+
+                    })
+                    .catch(error => console.log(error))
             })
-            .catch(error=>console.log(error))
-        })
     };
 
     const validatePassword = (value) => {
@@ -133,7 +151,7 @@ const Signup = () => {
                                 <input
                                     type="text"
                                     {...register("photoURL")}
-        
+
                                     placeholder="Photo URL"
                                     className="input input-bordered"
                                 />
