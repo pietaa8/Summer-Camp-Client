@@ -14,7 +14,15 @@ const Signup = () => {
         getValues
     } = useForm();
 
-    const { createUser, updateUserProfile } = useContext(AuthContext);
+    const { createUser, updateUserProfile ,googleSignIn} = useContext(AuthContext);
+
+    const handleGoogleSingIn=()=>{
+        googleSignIn()
+        .then(result=>{
+            const loggedInUser=result.user;
+            console.log(loggedInUser);
+        })
+    }
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
@@ -26,7 +34,7 @@ const Signup = () => {
                 console.log(loggesUser);
                 updateUserProfile(data.name, data.photoURL)
                     .then(() => {
-                        const saveUser = { name: data.name, email: data.email }
+                        const saveUser = { name: data.name, email: data.email, photo: data.photoURL }
 
                         fetch('http://localhost:5000/users', {
                             method: 'POST',
@@ -157,17 +165,19 @@ const Signup = () => {
                                 />
                             </div>
                             <div className="form-control mt-6">
-                                <input className="btn btn-primary" type="submit" value="Login" />
+                                <input className="btn btn-primary" type="submit" value="Sign Up" />
                             </div>
                             <p className="my-4 text-center">
                                 Already have an account?{" "}
                                 <Link className="font-bold text-orange-500" to="/login">
-                                    Sign Up
+                                    Login
                                 </Link>{" "}
                             </p>
                             <div className="divider"></div>
                             <div className="flex justify-center mt-4">
+                            <button onClick={handleGoogleSingIn} className="btn btn-outline">
                                 <FaGoogle size={24} />
+                                </button>
                             </div>
                         </form>
                     </div>

@@ -5,8 +5,16 @@ import { AuthContext } from "../../providers/AuthProvider";
 
 
 const Login = () => {
-    const {signIn}=useContext(AuthContext);
+    const {signIn,googleSignIn}=useContext(AuthContext);
     const [showPassword, setShowPassword]=useState(false);
+
+    const handleGoogleSingIn=()=>{
+        googleSignIn()
+        .then(result=>{
+            const loggedInUser=result.user;
+            console.log(loggedInUser);
+        })
+    }
 
     const navigate=useNavigate();
     const location=useLocation();
@@ -73,7 +81,10 @@ const Login = () => {
                             <p className="my-4 text-center">New to SportsZone Academy? <Link className="font-bold text-orange-500" to='/signup'>Sign Up</Link> </p>
                             <div className="divider"></div>
                             <div className="flex justify-center mt-4">
+                             
+                            <button onClick={handleGoogleSingIn} className="btn btn-outline">
                                 <FaGoogle size={24} />
+                                </button>
                             </div>
 
 
