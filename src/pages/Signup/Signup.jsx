@@ -1,6 +1,6 @@
 
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from 'react-icons/fa';
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
@@ -9,11 +9,13 @@ const Signup = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
         getValues
     } = useForm();
 
-    const {createUser}=useContext(AuthContext);
+    const {createUser,updateUserProfile}=useContext(AuthContext);
+    const navigate=useNavigate();
 
     const onSubmit = (data) => {
         console.log(data);
@@ -21,6 +23,14 @@ const Signup = () => {
         .then(result=>{
             const loggesUser=result.user;
             console.log(loggesUser);
+            updateUserProfile(data.name,data.photoURL)
+            .then(()=>{
+                console.log('user profile photo has been updated');
+                reset();
+                navigate('/');
+
+            })
+            .catch(error=>console.log(error))
         })
     };
 
@@ -114,6 +124,19 @@ const Signup = () => {
                                 {errors.confirmPassword && (
                                     <span>{errors.confirmPassword.message}</span>
                                 )}
+
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Photo URL</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    {...register("photoURL")}
+        
+                                    placeholder="Photo URL"
+                                    className="input input-bordered"
+                                />
                             </div>
                             <div className="form-control mt-6">
                                 <input className="btn btn-primary" type="submit" value="Login" />
@@ -121,7 +144,7 @@ const Signup = () => {
                             <p className="my-4 text-center">
                                 Already have an account?{" "}
                                 <Link className="font-bold text-orange-500" to="/login">
-                                    Login
+                                    Sign Up
                                 </Link>{" "}
                             </p>
                             <div className="divider"></div>

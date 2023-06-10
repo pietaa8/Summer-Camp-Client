@@ -39,20 +39,37 @@ const Navbar = () => {
       <li><a>Instructors</a></li>
       <li><a>Classes</a></li>
       
-      <li><a>Dashboard</a></li>
+      {user && (
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+            )}
     </ul>
     
   </div>
   <div className="navbar-end">
-  {
-        user? <>
-        <button onClick={handleLogOut} className="btn btn-active btn-ghost">Logout</button>
-        </> : <>
-        <Link to="/login" className="btn">Login</Link>
-        </>
-    }
-    
-  </div>
+          {user ? (
+            <>
+              {user.photoURL && (
+                <img
+                  src={user.photoURL}
+                  alt="Profile"
+                  className="w-8 h-8 rounded-full mr-2"
+                />
+              )}
+              <button
+                onClick={handleLogOut}
+                className="btn btn-active btn-ghost"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/login" className="btn">
+              Login
+            </Link>
+          )}
+        </div>
 </div>
             
         </div>
