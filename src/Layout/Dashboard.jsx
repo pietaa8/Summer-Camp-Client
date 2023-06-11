@@ -1,8 +1,8 @@
 import { Link, Outlet } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
-  // TODO: Determine the user role (student, instructor, admin)
-  const userRole = "admin"; // Replace with your logic to determine the user role
+  const [isAdmin] = useAdmin();
 
   return (
     <div>
@@ -17,34 +17,25 @@ const Dashboard = () => {
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
-            {userRole === "admin" ? (
+            {isAdmin ? (
               <>
                 <li>
-                  <Link>Manage Classes</Link>
+                  <Link to="/dashboard/manageclasses">Manage Classes</Link>
                 </li>
                 <li>
                   <Link to="/dashboard/manageusers">Manage Users</Link>
                 </li>
               </>
-            ) : userRole === "instructor" ? (
+            )  : (
               <>
                 <li>
-                  <Link>Add A Class</Link>
+                  <Link to="/dashboard/selectedclasses">My Selected Classes</Link>
                 </li>
                 <li>
-                  <Link>My Classes</Link>
-                </li>
-              </>
-            ) : (
-              <>
-                <li>
-                  <Link>My Selected Classes</Link>
+                  <Link to="/dashboard/enrolledclasses">My Enrolled Classes</Link>
                 </li>
                 <li>
-                  <Link>My Enrolled Classes</Link>
-                </li>
-                <li>
-                  <Link>Payment History</Link>
+                  <Link to="/dashboard/paymenthistory">Payment History</Link>
                 </li>
               </>
             )}
