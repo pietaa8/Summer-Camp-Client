@@ -1,12 +1,39 @@
 import { useQuery } from "react-query";
 
-
 const ManageUsers = () => {
-
-    const {data: users=[], refetch}=useQuery(['users'],async()=>{
-        const res= await fetch('http://localhost:5000/users')
+    const { data: users = [], refetch } = useQuery(['users'], async () => {
+        const res = await fetch('http://localhost:5000/users');
         return res.json();
     });
+    
+    const handleMakeAdmin = (user) => {
+        fetch(`http://localhost:5000/users/admin/${user._id}`, {
+            method: 'PATCH'
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if (data.modifiedCount) {
+                refetch();
+                alert('Admin created');
+            }
+        })
+    }
+
+    const handleMakeInstructor = (user) => {
+        fetch(`http://localhost:5000/users/instructor/${user._id}`, {
+            method: 'PATCH'
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if (data.modifiedCount) {
+                refetch();
+                alert('Instructor created');
+            }
+        })
+    }
+
     return (
         <div>
             {users.length}
@@ -23,11 +50,9 @@ const ManageUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            users.map((user,index)=><tr
-                            key={user._id}>
-                            
-                                <td>{index+1}</td>
+                        {users.map((user, index) => (
+                            <tr key={user._id}>
+                                <td>{index + 1}</td>
                                 <td>
                                     <div className="flex items-center space-x-3">
                                         <div className="avatar">
@@ -41,23 +66,28 @@ const ManageUsers = () => {
                                     </div>
                                 </td>
                                 <td>{user.email}</td>
-                                <td>Role</td>
+                                <td>{user.role}</td>
                                 <td>
-                                <button className="btn btn-primary mr-2"> Make Admin</button>
-                                <button className="btn btn-primary"> Make Instructor</button>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={() => handleMakeAdmin(user)}
+                                        disabled={user.role === 'admin'}
+                                    >
+                                        Make Admin
+                                    </button>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={() => handleMakeInstructor(user)}
+                                        disabled={user.role === 'instructor'}
+                                    >
+                                        Make Instructor
+                                    </button>
                                 </td>
-                              
-                               
                             </tr>
-                         )
-                        }
-                        {/* row 1 */}
-                        
+                        ))}
                     </tbody>
-
                 </table>
             </div>
-
         </div>
     );
 };
