@@ -36,7 +36,7 @@ const Signup = () => {
                     .then(() => {
                         const saveUser = { name: data.name, email: data.email, photo: data.photoURL }
 
-                        fetch('http://localhost:5000/users', {
+                        fetch('https://assignment-twelve-server-eight.vercel.app/users', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'

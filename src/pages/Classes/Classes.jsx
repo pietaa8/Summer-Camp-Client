@@ -10,7 +10,7 @@ const Classes = () => {
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
-        fetch('http://localhost:5000/classes')
+        fetch('https://assignment-twelve-server-eight.vercel.app/classes')
             .then(response => response.json())
             .then(classesData => {
                 // Filter the approved classes
@@ -46,7 +46,7 @@ const Classes = () => {
         // Performing the course selection logic here
         const SelectedClasses = {classId, name, image, instructorName, seats, price, userID: user._id, userEmail: user.email }
 
-        fetch('http://localhost:5000/selectedclasses', {
+        fetch('https://assignment-twelve-server-eight.vercel.app/selectedclasses', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

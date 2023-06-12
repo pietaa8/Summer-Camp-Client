@@ -6,14 +6,14 @@ const SelectedClasses = () => {
     const [selectedClasses,setSelectedClasses]=useState([]);
 
     useEffect(()=>{
-        fetch('http://localhost:5000/selectedclasses')
+        fetch('https://assignment-twelve-server-eight.vercel.app/selectedclasses')
         .then(res=>res.json())
         .then(data=>setSelectedClasses(data))
     },[])
 
     const handleDelete = (classId) => {
 
-        fetch(`http://localhost:5000/selectedclasses/${classId}`, {
+        fetch(`https://assignment-twelve-server-eight.vercel.app/selectedclasses/${classId}`, {
             method: 'DELETE'
         })
         .then(res => res.json())

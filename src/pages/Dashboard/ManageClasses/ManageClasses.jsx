@@ -4,14 +4,14 @@ const ManageClasses = () => {
     const [classes, setClasses] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/classes')
+        fetch('https://assignment-twelve-server-eight.vercel.app/classes')
             .then(res => res.json())
             .then(data => setClasses(data));
     }, []);
 
     const handleApprove = (classId) => {
         // Update the status of the class to "approved" in the database
-        fetch(`http://localhost:5000/classes/${classId}`, {
+        fetch(`https://assignment-twelve-server-eight.vercel.app/classes/${classId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ const ManageClasses = () => {
       
       const handleDeny = (classId) => {
         // Update the status of the class to "denied" in the database
-        fetch(`http://localhost:5000/classes/${classId}`, {
+        fetch(`https://assignment-twelve-server-eight.vercel.app/classes/${classId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',

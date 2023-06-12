@@ -21,4 +21,4 @@ API Integration: The client-side communicates with the server-side using HTTP re
 
 
 //Live Site
-Check out the live version of SportsZone Academy at 
+Check out the live version of SportsZone Academy at https://assignment-twelve-f4bbd.web.app/classes

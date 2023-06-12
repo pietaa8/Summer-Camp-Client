@@ -18,7 +18,7 @@ const AddClass = () => {
 
         const classes = { name, image, instructorName, email, seats, price, status: "pending", }
 
-        fetch('http://localhost:5000/classes', {
+        fetch('https://assignment-twelve-server-eight.vercel.app/classes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
