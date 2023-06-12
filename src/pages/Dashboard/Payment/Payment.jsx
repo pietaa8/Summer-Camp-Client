@@ -1,15 +1,15 @@
 import CheckOutForm from "./CheckOutForm";
-import {Elements} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { useEffect, useState } from "react";
 
-const stripePromise=loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
+const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
 const Payment = () => {
     const [cls, setCls] = useState([]);
   
     useEffect(() => {
-      fetch('http://localhost:5000/selectedclasses')
+      fetch(`http://localhost:5000/selectedclasses`)
         .then(res => res.json())
         .then(data => setCls(data));
     }, []);
@@ -17,14 +17,13 @@ const Payment = () => {
     return (
       <div>
         <h2 className="text-3xl text-center">Pay For Your Classes</h2>
-        <Elements stripe={stripePromise}>
-          {cls.map(classItem => (
-            <CheckOutForm key={classItem._id} price={classItem.price} />
-          ))}
-        </Elements>
+        {cls.map(classItem => (
+          <Elements stripe={stripePromise} key={classItem._id}>
+            <CheckOutForm classId={classItem._id} />
+          </Elements>
+        ))}
       </div>
     );
   };
   
   export default Payment;
-  

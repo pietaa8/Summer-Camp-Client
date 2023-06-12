@@ -27,14 +27,43 @@ const Extrasection = () => {
               transition={{ delay: 1, duration: 1 }}
             >
               Improve the game by focusing on main elements.
+
             </motion.p>
+            <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
+              <div className="flex flex-col">
+                <span className="countdown font-mono text-5xl">
+                  <span style={{ "--value": 15 }}></span>
+                </span>
+                days
+              </div>
+              <div className="flex flex-col">
+                <span className="countdown font-mono text-5xl">
+                  <span style={{ "--value": 10 }}></span>
+                </span>
+                hours
+              </div>
+              <div className="flex flex-col">
+                <span className="countdown font-mono text-5xl">
+                  <span style={{ "--value": 24 }}></span>
+                </span>
+                min
+              </div>
+              <div className="flex flex-col">
+                <span className="countdown font-mono text-5xl">
+                  <span style={{ "--value": 33 }}></span>
+                </span>
+                sec
+              </div>
+            </div>
+
             <motion.button
               className="btn btn-primary"
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1.5, duration: 0.5 }}
             >
-              Get Started
+
+              Enroll Now
             </motion.button>
           </div>
         </motion.div>

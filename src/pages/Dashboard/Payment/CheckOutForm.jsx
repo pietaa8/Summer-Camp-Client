@@ -1,70 +1,69 @@
-import {useStripe, CardElement,useElements} from '@stripe/react-stripe-js';
-import { useEffect, useState } from 'react';
+import { useStripe, CardElement, useElements} from '@stripe/react-stripe-js';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
-const CheckOutForm = ({price}) => {
-    const stripe=useStripe();
-    const elements=useElements();
-    const [axiosSecure]=useAxiosSecure();
+const CheckOutForm = ({ classId }) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [axiosSecure] = useAxiosSecure();
 
-    const [clientSecret,setClientSecret]=useState('');
+  const handleSubmit = async event => {
+    event.preventDefault();
 
-    useEffect(()=>{
-        axiosSecure.post('/create-payment-intent',{price})
-        .then(res=>{
-            console.log(res.data.clientSecret)
-            setClientSecret(res.data.clientSecret)
-        })
-
-    },[price,axiosSecure])
-
-    const handleSubmit=async(event)=>{
-        event.preventDefault();
-
-        if(!stripe || elements){
-            return
-        }
-
-        const card=elements.getElement(CardElement);
-        if(card==null){
-            return
-        }
-       
-        const {error,paymentMethod}=await stripe.createPaymentMethod({
-            type: 'card',
-            card
-        })
-        if(error){
-            console.log('error',error)
-        }
-        else{
-            console.log('payment method',paymentMethod);
-        }
-
+    if (!stripe || !elements) {
+      return;
     }
-    return (
-        <form className='w-3/4 m-8' onSubmit={handleSubmit}>
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: '16px',
-                color: '#424770',
-                '::placeholder': {
-                  color: '#aab7c4',
-                },
-              },
-              invalid: {
-                color: '#9e2146',
-              },
+
+    const card = elements.getElement(CardElement);
+    if (!card) {
+      return;
+    }
+
+    try {
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: 'card',
+        card
+      });
+
+      if (error) {
+        console.log('error', error);
+      } else {
+        console.log('payment method', paymentMethod);
+        // Make an API request to update the available seats for the class
+        await axiosSecure.patch(`/classes/${classId}`, { seats: -1 });
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  return (
+    <form className="w-3/4 m-8" onSubmit={handleSubmit}>
+      <CardElement
+        options={{
+          style: {
+            base: {
+              fontSize: '16px',
+              color: '#424770',
+              '::placeholder': {
+                color: '#aab7c4'
+              }
             },
-          }}
-        />
-        <button className="btn btn-outline btn-primary mt-4 btn-sm" type="submit" disabled={!stripe || !clientSecret}>
-          Pay
-        </button>
-      </form>
-    );
+            invalid: {
+              color: '#9e2146'
+            }
+          }
+        }}
+      />
+      <button
+        className="btn btn-outline btn-primary mt-4 btn-sm"
+        type="submit"
+        disabled={!stripe}
+      >
+        Pay
+      </button>
+    </form>
+  );
 };
+
 
 export default CheckOutForm;

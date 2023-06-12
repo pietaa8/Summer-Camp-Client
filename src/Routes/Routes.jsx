@@ -78,7 +78,7 @@ import Payment from "../pages/Dashboard/Payment/Payment";
             element: <PaymentHistory></PaymentHistory>
          },
          {
-            path: 'payment',
+            path: 'payment/:classId',
             element: <Payment></Payment>
          }
       ]

@@ -1,6 +1,11 @@
 import { Link, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import useInstructor from "../hooks/useInstructor";
+import { GrUserManager,   GrCheckboxSelected } from 'react-icons/gr';
+import {MdManageAccounts, MdClass,MdPayment } from 'react-icons/md';
+import {SiGoogleclassroom} from 'react-icons/si';
+import {BiAddToQueue} from 'react-icons/bi'
+
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
@@ -22,31 +27,31 @@ const Dashboard = () => {
             {isAdmin ? (
               <>
                 <li>
-                  <Link to="/dashboard/manageclasses">Manage Classes</Link>
+                  <Link to="/dashboard/manageclasses"> <MdManageAccounts/> Manage Classes </Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/manageusers">Manage Users</Link>
+                  <Link to="/dashboard/manageusers"><GrUserManager/>Manage Users</Link>
                 </li>
               </>
             ) : isInstructor ? (
               <>
                 <li>
-                  <Link to="/dashboard/addclass">Add A Class</Link>
+                  <Link to="/dashboard/addclass"> <MdClass/>Add A Class</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/myclasses">My Classes</Link>
+                  <Link to="/dashboard/myclasses"><SiGoogleclassroom/>My Classes</Link>
                 </li>
               </>
             ) : (
               <>
                 <li>
-                  <Link to="/dashboard/selectedclasses">My Selected Classes</Link>
+                  <Link to="/dashboard/selectedclasses"><GrCheckboxSelected/>My Selected Classes</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/enrolledclasses">My Enrolled Classes</Link>
+                  <Link to="/dashboard/enrolledclasses"><BiAddToQueue/>My Enrolled Classes</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/paymenthistory">Payment History</Link>
+                  <Link to="/dashboard/paymenthistory"><MdPayment/>Payment History</Link>
                 </li>
               </>
             )}
