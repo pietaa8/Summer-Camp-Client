@@ -1,7 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import useAdmin from '../../hooks/useAdmin';
+import useInstructor from '../../hooks/useInstructor';
+import { AuthContext } from '../../providers/AuthProvider';
 
 const Classes = () => {
     const [classes, setClasses] = useState([]);
+     const [isAdmin] = useAdmin();
+  const [isInstructor]=useInstructor();
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         fetch('http://localhost:5000/classes')
@@ -17,47 +23,72 @@ const Classes = () => {
             });
     }, []);
 
+    const handleSelect = (classId,image,seats,name,instructorName,price) => {
+        if (!user) {
+            alert('Please log in before selecting the course.');
+            return;
+        }
+
+        if (isAdmin) {
+            alert('You cannot select this course as an admin.');
+            return;
+        }
+        if (isInstructor) {
+            alert('You cannot select this course as an instructor.');
+            return;
+        }
+
+        if (seats === 0) {
+            alert('No available seats for this course.');
+            return;
+        }
+
+        // Performing the course selection logic here
+        const SelectedClasses = {classId, name, image, instructorName, seats, price, userID: user._id, userEmail: user.email }
+
+        fetch('http://localhost:5000/selectedclasses', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(SelectedClasses)
+        })
+
+
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    alert('Selectedclass is added');
+                }
+            })
+      
+
+    };
+
     return (
-        <div className="flex justify-center mt-5">
-            <div className="max-w-4xl mb-5">
-                <h2 className="text-center text-3xl font-serif font-extrabold">Our Best Classes</h2>
-                <table className="w-full bg-white border border-gray-300 rounded">
-                    <thead>
-                        <tr>
-                            <th className="py-2 px-4 border-b">Index</th>
-                            <th className="py-2 px-4 border-b">Class Name</th>
-                            <th className="py-2 px-4 border-b">Instructor Name</th>
-                            <th className="py-2 px-4 border-b">Available Seats</th>
-                            <th className="py-2 px-4 border-b">Price</th>
-                            <th className="py-2 px-4 border-b">Select</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {classes.map((classData, index) => (
-                            <tr key={classData._id}>
-                                <td className="py-2 px-4 border-b">{index + 1}</td>
-                                <td className="py-2 px-4 border-b">
-                                    <div className="flex items-center space-x-3">
-                                        <div className="avatar">
-                                            <div className="mask mask-squircle w-12 h-12">
-                                                <img src={classData.image} alt="Avatar Tailwind CSS Component" />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className="font-bold">{classData.name}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="py-2 px-4 border-b">{classData.instructorName}</td>
-                                <td className="py-2 px-4 border-b">{classData.seats}</td>
-                                <td className="py-2 px-4 border-b">{classData.price}</td>
-                                <td className="py-2 px-4 border-b">
-                                    <button className="btn btn-primary">Select</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+        <div>
+            <div className="grid grid-cols-3 gap-3 justify-center mt-5">
+                {classes.map(classData => (
+                    <div className={`card w-96 ${classData.availableSeats === 0 ? 'bg-red-500' : 'bg-base-100'} shadow-xl`} key={classData.id}>
+                        <figure><img src={classData.image} alt={classData.name} /></figure>
+                        <div className="card-body">
+                            <h2 className="card-title">{classData.name}</h2>
+                            <p>Instructor: {classData.instructorName}</p>
+                            <p>Available seats: {classData.seats}</p>
+                            <p>Price: {classData.price}</p>
+                            <div className="card-actions justify-end">
+                                <button
+                                    className="btn btn-primary"
+                                    disabled={classData.seats === 0  || isAdmin || isInstructor}
+                                    onClick={() => handleSelect(classData._id, classData.image, classData.seats,classData.name,classData.instructorName,classData.price)}
+                                >
+                                    {classData.seats === 0 ? 'Sold Out' : 'Select'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+
             </div>
         </div>
     );
