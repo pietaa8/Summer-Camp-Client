@@ -11,6 +11,23 @@ const SelectedClasses = () => {
         .then(data=>setSelectedClasses(data))
     },[])
 
+    const handleDelete = (classId) => {
+
+        fetch(`http://localhost:5000/selectedclasses/${classId}`, {
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const updatedClasses = selectedClasses.filter(classItem => classItem._id !== classId);
+                setSelectedClasses(updatedClasses);
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    };
+
     return (
         <div>
             <h2 className="text-center text-3xl">My Selected Classes</h2>
@@ -50,7 +67,7 @@ const SelectedClasses = () => {
                             <td>
                         
                                     <button
-                                        className="btn btn-primary"
+                                        className="btn btn-primary" onClick={() => handleDelete(classItem._id)}
                                        
                                     >
                                         Delete
