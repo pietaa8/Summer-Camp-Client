@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 
 const SelectedClasses = () => {
@@ -9,6 +10,7 @@ const SelectedClasses = () => {
         .then(res=>res.json())
         .then(data=>setSelectedClasses(data))
     },[])
+
     return (
         <div>
             <h2 className="text-center text-3xl">My Selected Classes</h2>
@@ -55,11 +57,11 @@ const SelectedClasses = () => {
                                     </button>
                                     </td>
                                     <td>
-                                    <button  className="btn btn-primary"
+                                   <Link to='/dashboard/payment'> <button  className="btn btn-primary"
                                        
-                                    >
-                                        Pay
-                                    </button>
+                                       >
+                                           Pay
+                                       </button></Link>
                             </td>
                         </tr>
                     ))}
